@@ -5,9 +5,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #122a52;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.game-container {
+  border: 2px solid #2e8551;
+  position: relative;
+  margin: 50px auto;
+  width: 800px;
+  height: 800px;
+}
+
+.snake-point {
+  position: absolute;
+  width: 2%;
+  height: 2%;
+  background-color: #ff03bc;
+  border: 1px solid #fff;
+  z-index: 2;
+}
+
+.snake-target {
+  position: absolute;
+  width: 2%;
+  height: 2%;
+  background-color: #03ff18;
+  border: 1px solid rgb(34, 196, 29);
+  z-index: 1;
 }
