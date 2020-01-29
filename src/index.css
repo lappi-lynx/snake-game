@@ -18,6 +18,52 @@ code {
   margin: 50px auto;
   width: 800px;
   height: 800px;
+  display: flex;
+  justify-content: center;
+}
+
+.game-over-container {
+  background-color: #000;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.reset-button {
+  width: 200px;
+  height: 100px;
+  margin: 30px auto;
+  background-color: #ff03bc;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.skull-image {
+  width: 300px;
+  height: 300px;
+  margin: 20px auto;
+}
+
+.game-over-text {
+  color: red;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.game-over-container .snake-point, .game-over-container .snake-target {
+  display: none;
+}
+
+.scoreboard {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  border: 1px solid #fff;
+  padding: 15px 20px;
 }
 
 .snake-point {
