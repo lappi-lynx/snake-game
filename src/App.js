@@ -165,12 +165,28 @@ function App() {
     }
   })
 
+  const handleFunImage = () => {
+    setShowFunImage(true);
+
+    const timer = setTimeout(() => {
+      setShowFunImage(false);
+    }, Math.floor(Math.random() * Math.floor(300)));
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }
+
+  useInterval(handleFunImage, Math.floor(Math.random() * Math.floor(10000)));
   useInterval(moveSnake, speed);
 
   return (
     <>
       <div className='scoreboard'>{ snakePoints.length }</div>
       <div className={ `game-container ${ isGameOver ? 'game-over-container' : '' }`}>
+      { showFunImage &&
+        <div className='fun-image'><img src={ bender } alt="bender" /></div>
+      }
       { isGameOver &&
         <>
           <div className='skull-image'><img src={ skull } alt="Deadman" /></div>
