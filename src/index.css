@@ -32,9 +32,10 @@ code {
   width: 200px;
   height: 100px;
   margin: 30px auto;
-  background-color: #ff03bc;
+  background-color: red;
   font-weight: bold;
   font-size: 20px;
+  text-transform: uppercase;
 }
 
 .skull-image {

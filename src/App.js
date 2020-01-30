@@ -4,6 +4,7 @@ import Target from './Target';
 import useInterval from './useInterval';
 import './App.css';
 import skull from './skull.jpg';
+import bender from './bender.png';
 
 const getRandomTarget = () => {
   let min = 1;
@@ -23,26 +24,32 @@ const initialState = {
 
 function App() {
   const [snakePoints, setSnakePoints] = useState(initialState.snakePoints);
-  const [target, generateTarget] = useState(initialState.target());
+  // const [target_1, generateTarget_1] = useState(initialState.target());
+  const [targets, generateTarget] = useState([initialState.target(), initialState.target()]);
   const [direction, setDirection] = useState(initialState.direction);
   const [speed, setSpeed] = useState(initialState.speed);
   const [isGameOver, updateIsGameOver] = useState(false);
   const [gameOverText, setGameOverText] = useState('Game Over.');
+  const [showFunImage, setShowFunImage] = useState(false);
 
   const onKeyDown = (e) => {
     e = e || window.event;
 
     switch (e.keyCode) {
       case 38:
+      case 87:
         setDirection('UP');
         break;
       case 40:
+      case 83:
         setDirection('DOWN');
         break;
       case 37:
+      case 65:
         setDirection('LEFT');
         break;
       case 39:
+      case 68:
         setDirection('RIGHT');
         break;
       default:
@@ -105,11 +112,17 @@ function App() {
     let dots = [...snakePoints];
     let head = dots[dots.length - 1];
 
-    if (head[0] === target[0] && head[1] === target[1]) {
-      generateTarget(getRandomTarget());
-      lvlUpSnake();
-      if (speed > 10) setSpeed(speed - 10);
-    }
+    targets.forEach(target => {
+      if (head[0] === target[0] && head[1] === target[1]) {
+        let index     = targets.indexOf(target)
+        let newTarget = [...targets]
+
+        newTarget.splice(index, 1, getRandomTarget());
+        generateTarget(newTarget);
+        lvlUpSnake();
+        if (speed > 10) setSpeed(speed - Math.floor(Math.random() * Math.floor(30)));
+      }
+    })
   }
 
   const lvlUpSnake = () => {
@@ -128,13 +141,14 @@ function App() {
       msg = "You're squashed."
     }
 
+    setShowFunImage(false);
     setGameOverText(`${msg} Snake length is ${snakePoints.length}.`);
     updateIsGameOver(true)
   }
 
   const resetDashboard = () => {
     setSnakePoints(initialState.snakePoints);
-    generateTarget(initialState.target());
+    generateTarget([initialState.target(), initialState.target()]);
     setDirection(initialState.direction);
     setSpeed(initialState.speed);
     updateIsGameOver(false);
@@ -167,7 +181,9 @@ function App() {
         </>
       }
         <Snake snakePoints={ snakePoints } />
-        <Target targetPoint={ target } />
+        { targets.map(target => {
+          return <Target targetPoint={ target } />
+        }) }
       </div>
     </>
   );
