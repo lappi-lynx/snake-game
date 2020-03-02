@@ -24,13 +24,14 @@ const initialState = {
 
 function App() {
   const [snakePoints, setSnakePoints] = useState(initialState.snakePoints);
-  // const [target_1, generateTarget_1] = useState(initialState.target());
   const [targets, generateTarget] = useState([initialState.target(), initialState.target()]);
   const [direction, setDirection] = useState(initialState.direction);
   const [speed, setSpeed] = useState(initialState.speed);
-  const [isGameOver, updateIsGameOver] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [gameOverText, setGameOverText] = useState('Game Over.');
+  const [scoreText, setScoreText] = useState('');
   const [showFunImage, setShowFunImage] = useState(false);
+  // localStorage.setItem('highScore', 0);
 
   const onKeyDown = (e) => {
     e = e || window.event;
@@ -92,7 +93,7 @@ function App() {
     let head = dots[dots.length - 1];
 
     if (head[0] >= 100 || head[1] >= 100 || head[0] < 0 || head[1] < 0) {
-      onGameOver('outside');
+      if (!isGameOver) onGameOver('outside');
     }
   }
 
@@ -103,7 +104,7 @@ function App() {
     dots.pop();
     dots.forEach(dot => {
       if (head[0] === dot[0] && head[1] === dot[1]) {
-        onGameOver('suicide');
+        if (!isGameOver) onGameOver('suicide');
       }
     })
   }
@@ -142,8 +143,20 @@ function App() {
     }
 
     setShowFunImage(false);
-    setGameOverText(`${msg} Snake length is ${snakePoints.length}.`);
-    updateIsGameOver(true)
+    setGameOverText(msg);
+    setScoreText(generateScoreText());
+    setIsGameOver(true)
+  }
+
+  const generateScoreText = () => {
+    const highScore = parseInt(localStorage.getItem('highScore'));
+
+    if (!highScore || (snakePoints.length > highScore)) {
+      localStorage.setItem('highScore', snakePoints.length);
+      return `You've beat a highscore! New result is ${snakePoints.length}`;
+    } else {
+      return `Your result is ${snakePoints.length}. Best result: ${highScore}`;
+    }
   }
 
   const resetDashboard = () => {
@@ -151,7 +164,7 @@ function App() {
     generateTarget([initialState.target(), initialState.target()]);
     setDirection(initialState.direction);
     setSpeed(initialState.speed);
-    updateIsGameOver(false);
+    setIsGameOver(false);
   }
 
   useEffect(() => {
@@ -166,6 +179,7 @@ function App() {
   })
 
   const handleFunImage = () => {
+    if (isGameOver) return
     setShowFunImage(true);
 
     const timer = setTimeout(() => {
@@ -191,6 +205,7 @@ function App() {
         <>
           <div className='skull-image'><img src={ skull } alt="Deadman" /></div>
           <div className='game-over-text'>{ gameOverText }</div>
+          <div className='game-over-text new_high_score'>{ scoreText }</div>
           <button className='reset-button' onClick={ () => resetDashboard() }>
             Start Over!
           </button>

@@ -13,6 +13,7 @@ code {
     monospace;
 }
 .game-container {
+  background-color: #333;
   border: 2px solid #2e8551;
   position: relative;
   margin: 50px auto;
@@ -52,6 +53,10 @@ code {
   margin: 0 auto;
 }
 
+.game-over-text.new_high_score {
+  color: #41c1e7;
+}
+
 .game-over-container .snake-point, .game-over-container .snake-target {
   display: none;
 }
@@ -71,7 +76,7 @@ code {
   position: absolute;
   width: 2%;
   height: 2%;
-  background-color: #ff03bc;
+  background-color: #41c1e7;
   border: 1px solid #fff;
   z-index: 2;
 }
@@ -80,7 +85,7 @@ code {
   position: absolute;
   width: 2%;
   height: 2%;
-  background-color: #03ff18;
+  background-color: #ff03bc;
   border: 1px solid rgb(34, 196, 29);
   z-index: 1;
 }
