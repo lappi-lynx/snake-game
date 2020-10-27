@@ -22,7 +22,7 @@ const initialState = {
   speed: 200
 };
 
-function App() {
+const App = () => {
   const [snakePoints, setSnakePoints] = useState(initialState.snakePoints);
   const [targets, generateTarget] = useState([initialState.target(), initialState.target()]);
   const [direction, setDirection] = useState(initialState.direction);
