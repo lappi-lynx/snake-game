@@ -4,7 +4,7 @@ import Target from './Target';
 import useInterval from './useInterval';
 import './App.css';
 import skull from './skull.jpg';
-import bender from './bender.png';
+import bender from './images/bender.png';
 
 const getRandomTarget = () => {
   let min = 1;
