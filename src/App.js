@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Snake from './Snake';
+import StartScreen from './StartScreen';
 import Target from './Target';
 import useInterval from './useInterval';
 import './App.css';
@@ -31,7 +32,8 @@ const App = () => {
   const [gameOverText, setGameOverText] = useState('Game Over.');
   const [scoreText, setScoreText] = useState('');
   const [showFunImage, setShowFunImage] = useState(false);
-  // localStorage.setItem('highScore', 0);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [showHighscores, highscoresVisible] = useState(false);
 
   const onKeyDown = (e) => {
     e = e || window.event;
@@ -191,6 +193,14 @@ const App = () => {
     }
   }
 
+  const startGame = () => {
+    setGameStarted(true)
+  }
+
+  const renderHighscores = () => {
+    highscoresVisible(true)
+  }
+
   useInterval(handleFunImage, Math.floor(Math.random() * Math.floor(10000)));
   useInterval(moveSnake, speed);
 
@@ -198,23 +208,31 @@ const App = () => {
     <>
       <div className='scoreboard'>{ snakePoints.length }</div>
       <div className={ `game-container ${ isGameOver ? 'game-over-container' : '' }`}>
-      { showFunImage &&
-        <div className='fun-image'><img src={ bender } alt="bender" /></div>
+      { !gameStarted &&
+        <StartScreen startGame={ startGame } renderHighscores={ renderHighscores } />
       }
-      { isGameOver &&
+
+      { gameStarted &&
         <>
-          <div className='skull-image'><img src={ skull } alt="Deadman" /></div>
-          <div className='game-over-text'>{ gameOverText }</div>
-          <div className='game-over-text new_high_score'>{ scoreText }</div>
-          <button className='reset-button' onClick={ () => resetDashboard() }>
-            Start Over!
-          </button>
+          { showFunImage &&
+            <div className='fun-image'><img src={ bender } alt="bender" /></div>
+          }
+          { isGameOver &&
+            <>
+              <div className='skull-image'><img src={ skull } alt="Deadman" /></div>
+              <div className='game-over-text'>{ gameOverText }</div>
+              <div className='game-over-text new_high_score'>{ scoreText }</div>
+              <button className='reset-button' onClick={ () => resetDashboard() }>
+                Start Over!
+              </button>
+            </>
+          }
+          <Snake snakePoints={ snakePoints } />
+          { targets.map(target => {
+            return <Target targetPoint={ target } />
+          }) }
         </>
       }
-        <Snake snakePoints={ snakePoints } />
-        { targets.map(target => {
-          return <Target targetPoint={ target } />
-        }) }
       </div>
     </>
   );
