@@ -24,15 +24,15 @@ const initialState = {
 };
 
 const App = () => {
-  const [snakePoints, setSnakePoints] = useState(initialState.snakePoints);
-  const [targets, generateTarget] = useState([initialState.target(), initialState.target()]);
-  const [direction, setDirection] = useState(initialState.direction);
-  const [speed, setSpeed] = useState(initialState.speed);
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [snakePoints, setSnakePoints]   = useState(initialState.snakePoints);
+  const [targets, generateTarget]       = useState([initialState.target(), initialState.target()]);
+  const [direction, setDirection]       = useState(initialState.direction);
+  const [speed, setSpeed]               = useState(initialState.speed);
+  const [isGameOver, setIsGameOver]     = useState(false);
   const [gameOverText, setGameOverText] = useState('Game Over.');
-  const [scoreText, setScoreText] = useState('');
+  const [scoreText, setScoreText]       = useState('');
   const [showFunImage, setShowFunImage] = useState(false);
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted]   = useState(false);
   const [showHighscores, highscoresVisible] = useState(false);
   const [startScreenVisible, setStartScreenVisible] = useState(true);
 
@@ -56,14 +56,11 @@ const App = () => {
       case 68:
         setDirection('RIGHT');
         break;
-      default:
-        setDirection('RIGHT');
-        break;
     }
   }
 
   const moveSnake = () => {
-    if (isGameOver) return
+    if (!gameStarted || isGameOver) return
 
     let dots = [...snakePoints];
     let head = dots[dots.length - 1];
