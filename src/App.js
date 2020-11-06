@@ -36,6 +36,17 @@ const App = () => {
   const [showHighscores, highscoresVisible] = useState(false);
   const [startScreenVisible, setStartScreenVisible] = useState(true);
 
+  useEffect(() => {
+    window.addEventListener("keydown", onKeyDown)
+    handleOutside();
+    handleSelfEaten();
+    handleIncrease();
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown)
+    }
+  })
+
   const onKeyDown = (e) => {
     e = e || window.event;
 
@@ -149,9 +160,9 @@ const App = () => {
     setGameStarted(false);
   }
 
-  const generateScoreText = () => {
-    const highScore = parseInt(localStorage.getItem('highScore'));
+  const highScore = parseInt(localStorage.getItem('highScore'));
 
+  const generateScoreText = () => {
     if (score < 1) {
       return `Please try again! Your snake died with ${score} points :(`;
     } else if (!highScore || (score > highScore)) {
@@ -174,17 +185,6 @@ const App = () => {
     startGame();
   }
 
-  useEffect(() => {
-    window.addEventListener("keydown", onKeyDown)
-    handleOutside();
-    handleSelfEaten();
-    handleIncrease();
-
-    return () => {
-      window.removeEventListener("keydown", onKeyDown)
-    }
-  })
-
   const handleFunImage = () => {
     if (isGameOver) return
     setShowFunImage(true);
@@ -204,6 +204,8 @@ const App = () => {
   }
 
   const renderHighscores = () => {
+    setStartScreenVisible(false);
+    setGameStarted(false);
     highscoresVisible(true)
   }
 
@@ -214,22 +216,24 @@ const App = () => {
     <>
       <div className='scoreboard'>{ score }</div>
       <div className={ `game-container ${ isGameOver ? 'game-over-container' : '' }`}>
+        { showHighscores &&
+          <div className='highscore-container'>
+            { highScore }
+            <button className='reset-button' onClick={ () => {
+              setStartScreenVisible(true);
+              highscoresVisible(false);
+            } }>
+              Back
+            </button>
+          </div>
+        }
+
         { startScreenVisible &&
           <StartScreen startGame={ startGame } renderHighscores={ renderHighscores } />
         }
 
         { showFunImage && gameStarted &&
           <div className='fun-image'><img src={ bender } alt="bender" /></div>
-        }
-        { isGameOver &&
-          <>
-            <div className='skull-image'><img src={ skull } alt="Deadman" /></div>
-            <div className='game-over-text'>{ gameOverText }</div>
-            <div className='game-over-text new_high_score'>{ scoreText }</div>
-            <button className='reset-button' onClick={ () => resetDashboard() }>
-              Start Over!
-            </button>
-          </>
         }
 
         { gameStarted &&
@@ -238,6 +242,17 @@ const App = () => {
             { targets.map(target => {
               return <Target targetPoint={ target } />
             }) }
+          </>
+        }
+
+        { isGameOver &&
+          <>
+            <div className='skull-image'><img src={ skull } alt="Deadman" /></div>
+            <div className='game-over-text'>{ gameOverText }</div>
+            <div className='game-over-text new_high_score'>{ scoreText }</div>
+            <button className='reset-button' onClick={ () => resetDashboard() }>
+              Start Over!
+            </button>
           </>
         }
       </div>
