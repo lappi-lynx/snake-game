@@ -152,13 +152,18 @@ const App = () => {
   const generateScoreText = () => {
     const highScore = parseInt(localStorage.getItem('highScore'));
 
-    if (!highScore || (snakePoints.length > highScore)) {
-      localStorage.setItem('highScore', snakePoints.length);
-      return `You've beat a highscore! New result is ${snakePoints.length}`;
+    if (score < 1) {
+      return `Please try again! Your snake died with ${score} points :(`;
+    } else if (!highScore || (score > highScore)) {
+      localStorage.setItem('highScore', score);
+      return `You've beat a highscore! New result is ${score}`;
     } else {
-      return `Your result is ${snakePoints.length}. Best result: ${highScore}`;
+      return `Your result is ${score}. Best result: ${highScore}`;
     }
   }
+
+  // current snake lenght - initial snake length
+  const score = snakePoints.length - 2;
 
   const resetDashboard = () => {
     setSnakePoints(initialState.snakePoints);
@@ -207,7 +212,7 @@ const App = () => {
 
   return (
     <>
-      <div className='scoreboard'>{ snakePoints.length }</div>
+      <div className='scoreboard'>{ score }</div>
       <div className={ `game-container ${ isGameOver ? 'game-over-container' : '' }`}>
         { startScreenVisible &&
           <StartScreen startGame={ startGame } renderHighscores={ renderHighscores } />
