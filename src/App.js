@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Snake from './Snake';
-import StartScreen from './StartScreen';
-import HighScore from './HighScore';
-import Target from './Target';
-import useInterval from './useInterval';
+import Snake from './components/Snake';
+import StartScreen from './components/StartScreen';
+import HighScore from './components/HighScore';
+import Target from './components/Target';
+import useInterval from './components/useInterval';
 import './App.css';
 import skull from './skull.jpg';
 import bender from './images/bender.png';
