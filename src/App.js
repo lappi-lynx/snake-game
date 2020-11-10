@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Snake from './Snake';
 import StartScreen from './StartScreen';
+import HighScore from './HighScore';
 import Target from './Target';
 import useInterval from './useInterval';
 import './App.css';
@@ -162,6 +163,9 @@ const App = () => {
 
   const highScore = parseInt(localStorage.getItem('highScore'));
 
+  // current snake lenght - initial snake length
+  const score = snakePoints.length - 2;
+
   const generateScoreText = () => {
     if (score < 1) {
       return `Please try again! Your snake died with ${score} points :(`;
@@ -172,9 +176,6 @@ const App = () => {
       return `Your result is ${score}. Best result: ${highScore}`;
     }
   }
-
-  // current snake lenght - initial snake length
-  const score = snakePoints.length - 2;
 
   const resetDashboard = () => {
     setSnakePoints(initialState.snakePoints);
@@ -203,6 +204,11 @@ const App = () => {
     setGameStarted(true);
   }
 
+  const renderStartScreen = () => {
+    setStartScreenVisible(true);
+    highscoresVisible(false);
+  }
+
   const renderHighscores = () => {
     setStartScreenVisible(false);
     setGameStarted(false);
@@ -217,15 +223,7 @@ const App = () => {
       <div className='scoreboard'>{ score }</div>
       <div className={ `game-container ${ isGameOver ? 'game-over-container' : '' }`}>
         { showHighscores &&
-          <div className='highscore-container'>
-            { highScore }
-            <button className='reset-button' onClick={ () => {
-              setStartScreenVisible(true);
-              highscoresVisible(false);
-            } }>
-              Back
-            </button>
-          </div>
+          <HighScore highScore={ highScore } renderStartScreen={ renderStartScreen }/>
         }
 
         { startScreenVisible &&
