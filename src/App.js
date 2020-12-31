@@ -7,6 +7,7 @@ import useInterval from './components/useInterval';
 import './App.css';
 import skull from './skull.jpg';
 import bender from './images/bender.png';
+import zoidberg from './images/zoid.png';
 
 const getRandomTarget = () => {
   let min = 1;
@@ -230,8 +231,11 @@ const App = () => {
           <StartScreen startGame={ startGame } renderHighscores={ renderHighscores } />
         }
 
-        { showFunImage && gameStarted &&
-          <div className='fun-image'><img src={ bender } alt="bender" /></div>
+        { showFunImage && gameStarted && (
+          Math.random() < 0.5 ?
+            <div className='fun-image'><img src={ bender } alt="bender" /></div> :
+            <div className='fun-image'><img src={ zoidberg } alt="zoidberg" /></div>
+          )
         }
 
         { gameStarted &&
