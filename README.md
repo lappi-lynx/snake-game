@@ -1,5 +1,5 @@
 Pet project of snake game with distracting 25 frame effect.
-Made by @extazystas from scratch on reactjs with hooks.
+Made by me from scratch on reactjs with hooks.
 
 Install and run:
 ### `yarn install`
