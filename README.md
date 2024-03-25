@@ -1,11 +1,13 @@
-Pet project of snake game with distracting 25 frame effect.
-Made by me from scratch on reactjs with hooks.
+Fun project of snake game with distracting 25 frame effect.
+It uses browser `localStorage` to store high score results.
 
-Install and run:
+### Install and run:
 ### `yarn install`
 ### `yarn start`
 
-TODO:
-- wrap application to Electron and make a desktop app for windows and macOs;
-- add different distracting images;
-- add music;
+### Screenshots:
+![Game screen](./public/0.jpeg)
+![Game over](./public/1.jpeg)
+
+
+Made by Stanislav Kniazev in 2018 using Reactjs with hooks.
